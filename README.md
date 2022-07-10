@@ -13,7 +13,33 @@
 
 #### 3. 内容介绍
 
+*STL的六大组件均会在本项目中实现，但是部分组件会进行一部分的简化与调整*
 
+- **allocator**
+
+本项目中仅实现了一个简易的内存分配器，底层直接调用new和delete，负责容器中元素的内存分配与释放
+
+- **container**
+
+本项目实现**动态数组、链表、双向数组、栈、队列、有序表、哈希表**的结构定义与相关操作，包括增、删、改、查、插等
+
+- **iterator**
+
+iterator共存在5种类型：**random_acess_iterator  |  bidirectional_iterator  | forward_iterator | input_iterator | output_iterator**，本项目实现前4种
+
+每个容器均存在自身的iterator，供用户访问容器中存放的元素，同时供算法进行调用操作
+
+- **algorithm**
+
+本项目实现基本的**查询、排序**算法
+
+- **functor**
+
+由于C++11后引入lambda表达式，其功能更加灵活方便，故本项目仅实现常用的部分仿函数，如**关系类仿函数、哈希函数**等
+
+- **adaptor**
+
+本项目简化了adaptor的内容，部分适配器功能已融入其它组件中
 
 
 
