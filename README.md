@@ -9,6 +9,36 @@
 
 开发环境：Microsoft Visual Studio 2019
 
+程序架构：
+
+> \- alloctor.hpp		// 空间分配器，用以调度内存
+>
+> \- iterator.hpp		// 迭代器接口，用以定义4种迭代器类型与相关关系
+>
+> \- vector.hpp
+>
+> \- list.hpp
+>
+> \- deque.hpp
+>
+> \- stack.hpp
+>
+> \- queue.hpp
+>
+> \- sortedset.hpp
+>
+> \- sortedmap.hpp
+>
+> \- hashset.hpp
+>
+> \- hashmap.hpp
+>
+> \- algorithm.hpp	// 算法，用以实现对容器操作的各类算法
+>
+> \- functor.hpp		// 仿函数，用以实现算法中部分常用的仿函数
+
+注：自实现的所有stl内容均在***mstl_itm***名称空间下
+
 
 
 #### 3. 内容介绍
@@ -17,7 +47,7 @@
 
 - **allocator**
 
-本项目中仅实现了一个简易的内存分配器，底层直接调用new和delete，负责容器中元素的内存分配与释放
+本项目中仅实现了一个简易的空间分配器，底层直接调用new和delete，负责容器中元素的内存分配与释放
 
 - **container**
 

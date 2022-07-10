@@ -23,5 +23,44 @@
     <ClInclude Include="test.hpp">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="allocator.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="iterator.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="vector.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="list.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="deque.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stack.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="queue.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sortedset.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sortedmap.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hashset.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hashmap.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithm.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="functor.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

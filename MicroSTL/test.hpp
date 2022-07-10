@@ -1,8 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
+#include "allocator.hpp"
 #include <iostream>
 #include <string>
 #include <Windows.h>
 using namespace std;
+using namespace mstl_itm;
 
 class Test
 {
@@ -64,22 +66,31 @@ public:
 			switch (ipt)
 			{
 			case 1:	// vector
+
 				break;
 			case 2:	// list
+
 				break;
 			case 3:	// deque
+
 				break;
 			case 4:	// stack
+
 				break;
 			case 5:	// queue
+
 				break;
 			case 6:	// sortedset
+
 				break;
 			case 7:	// sortedmap
+
 				break;
 			case 8:	// hashset
+
 				break;
 			case 9:	// hashmap
+
 				break;
 			case 0:	// exit
 				system("cls");
