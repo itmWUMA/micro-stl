@@ -9,6 +9,11 @@ int main()
 {
 	//Vector<int> v;
 	Vector<int> v(10);
+	v.Size();
+	v.Begin();
+	v.End();
+	v.IsEmpty();
+	v.Capcity();
 	return 0;
 }
 
