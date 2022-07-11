@@ -11,10 +11,11 @@ namespace mstl_itm
 	class Vector
 	{
 	public:
-		using ValueType = _ValueT;		// 元素类型
-		using Pointer = _ValueT*;		// 元素类型指针
+		using ValueType		= _ValueT;		// 元素类型
+		using Pointer			= _ValueT*;		// 元素类型指针
+		using Reference		= _ValueT&;
 		using DifferenceType = size_t;		// 指针距离类型
-		using Iterator = Pointer;		// Vector迭代器
+		using Iterator			= Pointer;		// Vector迭代器
 
 	private:
 		Iterator m_start;				// 目前使用空间的头部
@@ -89,5 +90,14 @@ namespace mstl_itm
 
 		// 判断数组是否为空
 		bool IsEmpty() { return (m_start == m_finish); }
+
+		// 获取首元素
+		ValueType Front() { return *m_start; }
+
+		// 获取末元素
+		ValueType Back() { return *m_finish; }
+
+		// 索引器
+		Reference operator[](size_t index) { return *(m_start + index); }
 	};
 }
