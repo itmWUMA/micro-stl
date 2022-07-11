@@ -1,5 +1,7 @@
+#pragma once
 // 空间分配器: 用以调度内存
 #define _CRT_SECURE_NO_WARNINGS
+#define ALLOCATOR
 
 #include <assert.h>
 namespace mstl_itm
@@ -16,7 +18,7 @@ namespace mstl_itm
 		// 分配一块内存空间
 		static Pointer Allocate()
 		{
-			return new AllocType();
+			return new AllocType;
 		}
 
 		// 分配连续内存空间

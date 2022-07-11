@@ -1,14 +1,14 @@
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "test.hpp"
-#include <vector>
-#include "iterator.hpp"
+//#include <vector>
+#include "vector.hpp"
 
 // Inner Test
 int main()
 {
-	cout << typeid(IteratorTraits<RandomAcessIterator<double>>::IterType).name()
-		<< endl;
-
+	//Vector<int> v;
+	Vector<int> v(10);
 	return 0;
 }
 
