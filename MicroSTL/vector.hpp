@@ -99,5 +99,22 @@ namespace mstl_itm
 
 		// 索引器
 		Reference operator[](size_t index) { return *(m_start + index); }
+
+		// 添加元素
+		void PushBack(const ValueType& elem)
+		{
+			// 数组满员
+			if (Size() == Capcity())
+			{
+				// 扩容
+				size_t cap = Capcity();
+				Allocator<ValueType>::Append(m_start, cap, 2 * cap);
+				// 更新3根指针
+				m_finish = m_start + cap;
+				m_endOfStorage = m_start + 2 * cap;
+			}
+			*m_finish = elem;
+			m_finish++;
+		}
 	};
 }

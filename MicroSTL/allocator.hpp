@@ -10,9 +10,9 @@ namespace mstl_itm
 	class Allocator
 	{
 	public:
-		using AllocType	= _AllocT;	// 类型
-		using Pointer		= _AllocT*;	// 指针
-		using SizeType		= size_t;	// 大小类型
+		using AllocType = _AllocT;	// 类型
+		using Pointer = _AllocT*;	// 指针
+		using SizeType = size_t;	// 大小类型
 
 	public:
 		// 分配一块内存空间
@@ -39,6 +39,19 @@ namespace mstl_itm
 		{
 			assert(p != nullptr);
 			delete[] p;
+		}
+
+		// 扩容
+		static void Append(Pointer& p, SizeType oldSize, SizeType newSize)
+		{
+			Pointer newP = AllocateRange(newSize);
+			// 拷贝原内容至扩增后空间
+			Pointer newIter = newP, oldIter = p;
+			for (size_t i = 0; i < oldSize; i++, newIter++, oldIter++)
+				*newIter = *oldIter;
+			// 销毁原空间
+			DeallocateRange(p);
+			p = newP;
 		}
 	};
 }
