@@ -166,5 +166,21 @@ namespace mstl_itm
 			
 			return res;
 		}
+
+		// 清空元素
+		void Clear() { m_finish = m_start; }
+
+		// 重新设置数组大小
+		void Resize(size_t n)
+		{
+			// n > 数组容量
+			while (n > Capcity())
+				_Append();
+			// n < 数组大小	缩减
+			for (; n < Size(); m_finish--);
+			// n > 数组大小 默认构造
+			for (; n > Size(); m_finish++)
+				*m_finish = ValueType();
+		}
 	};
 }
