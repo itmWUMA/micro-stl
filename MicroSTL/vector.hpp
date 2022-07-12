@@ -5,6 +5,10 @@
 #include "allocator.hpp"
 #include "iterator.hpp"
 
+#include <initializer_list>
+
+using namespace std;
+
 namespace mstl_itm
 {
 	template <class _ValueT>
@@ -64,6 +68,19 @@ namespace mstl_itm
 			m_endOfStorage = p + cap;
 
 			for (auto iter = v.m_start; iter != v.m_finish; iter++, m_finish++)
+				*m_finish = *iter;
+		}
+
+		// ³õÊ¼»¯Æ÷
+		Vector(const initializer_list<ValueType>& il)
+		{
+			DifferenceType cap = il.end() - il.begin();
+			Pointer p = Allocator<ValueType>::AllocateRange(cap);
+			m_start = p;
+			m_finish = p;
+			m_endOfStorage = p + cap;
+
+			for (auto iter = il.begin(); iter != il.end(); iter++, m_finish++)
 				*m_finish = *iter;
 		}
 

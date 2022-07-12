@@ -4,13 +4,7 @@
 #include "vector.hpp"
 //#include <vector>
 
-// Inner Test
-//int main()
-//{
-//	//Vector<int> v;
-//	Vector<int> v(10);
-//	return 0;
-//}
+ //Inner Test
 
 int main()
 {
