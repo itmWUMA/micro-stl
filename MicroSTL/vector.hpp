@@ -105,9 +105,10 @@ namespace mstl_itm
 		void _Append()
 		{
 			size_t cap = Capcity();
+			size_t size = Size();
 			Allocator<ValueType>::Append(m_start, cap, 2 * cap);
 			// 更新3根指针
-			m_finish = m_start + cap;
+			m_finish = m_start + size;
 			m_endOfStorage = m_start + 2 * cap;
 		}
 

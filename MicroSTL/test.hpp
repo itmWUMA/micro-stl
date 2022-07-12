@@ -174,6 +174,19 @@ private:
 			cout << *iter << "," << endl;
 		cout << " ]\n";
 
+		// Çå¿ÕÔªËØ
+		cout << endl;
+		Sleep(1000);
+		cout << "Clear all elements : " << endl;
+		v.Clear();
+		Sleep(1000);
+		cout << "Then resize vector : " << endl;
+		v.Resize(50);
+		for (auto iter = v.Begin(); iter != v.End(); iter++)
+			cout << *iter << "," << endl;
+		cout << " ]\n";
+
+
 		system("pause");
 		system("cls");
 	}
