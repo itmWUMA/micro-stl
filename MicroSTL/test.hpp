@@ -1,14 +1,17 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "allocator.hpp"
+#include "vector.hpp"
 #include <iostream>
 #include <string>
+#include <random>
 #include <Windows.h>
 using namespace std;
 using namespace mstl_itm;
 
 class Test
 {
+
 private:
 	// 打字机效果
 	static void DelayPrintLine(const string& str, DWORD delayTime = 80)
@@ -28,15 +31,9 @@ private:
 		system("cls");
 	}
 
-	// 打印界面
-	static void PrintHello()
+	// 打印主界面
+	static void PrintMainInterface()
 	{
-		DelayPrintLine("Welcome to MicroSTL");
-		Sleep(1000);
-		DelayPrintLine("This is a test program, which you can test all functions in the project");
-		Sleep(1000);
-		DelayPrintLine("Choose test items according to following options: ");
-		Sleep(1000);
 		cout << "================= MicroSTL =================" << endl;
 		Sleep(200);
 		cout << "         [1] vector" << '\t' << "[2] list" << endl;
@@ -54,10 +51,151 @@ private:
 		cout << "=============================================" << endl;
 	}
 
+	// 打印界面
+	static void PrintHello()
+	{
+		DelayPrintLine("Welcome to MicroSTL");
+		Sleep(1000);
+		DelayPrintLine("This is a test program, which you can test all functions in the project");
+		Sleep(1000);
+		DelayPrintLine("Choose test items according to following options: ");
+		Sleep(1000);
+		PrintMainInterface();
+	}
+
+	// 随机字符串
+	static string GetRandStr(int len)
+	{
+		string buffer;
+		for (int i = 0; i < len; i++)
+			buffer += (char)(rand() % 26 + 65);
+		return buffer;
+	}
+
+	// 测试用自定义类型
+	class TestType
+	{
+	public:
+		int i;
+		double d;
+		string str;
+
+		TestType() : i(0), d(0), str("") {}
+		TestType(int i, double d, string str) : i(i), d(d), str(str) {}
+
+		bool operator<(const TestType& tt) const
+		{
+			if (this->i != tt.i)
+				return this->i < tt.i;
+			else if (this->d != tt.d)
+				return this->d < tt.d;
+			else
+				return this->str < tt.str;
+		}
+
+		bool operator>(const TestType& tt) const
+		{
+			return !(*this < tt);
+		}
+
+		bool operator==(const TestType& tt) const
+		{
+			return (i == tt.i && d == tt.d && str == tt.str);
+		}
+
+		bool operator!=(const TestType& tt) const
+		{
+			return !(*this == tt);
+		}
+	};
+
+	friend ostream& operator<<(ostream&, const Test::TestType&);
+
+	static void TestVector()
+	{
+		system("cls");
+
+		Vector<TestType> v;
+
+		// 生成随机值并打印
+		cout << "Push 10 random elements : " << endl;
+		default_random_engine e((unsigned int)time(NULL));
+		uniform_int_distribution<int> ir(0, 100);
+		uniform_real_distribution<double> dr(0, 100);
+		for (int i = 0; i < 10; i++)
+		{
+			Sleep(100);
+			TestType randTT = TestType(ir(e), dr(e), GetRandStr(5));
+			cout << randTT << endl;
+			v.PushBack(randTT);
+		}
+
+		// 打印vector
+		Sleep(100);
+		cout << "vector: \n[ " << endl;
+		for (auto iter = v.Begin(); iter != v.End(); iter++)
+			cout << *iter << "," << endl;
+		cout << " ]\n";
+
+		// 显示vector属性
+		Sleep(100);
+		cout << endl;
+		cout << "size = " << v.Size() << endl;
+		cout << "capcity = " << v.Capcity() << endl;
+		cout << "isEmpty = " << (v.IsEmpty() ? "TRUE" : "FALSE") << endl;
+		cout << "front = " << v.Front() << endl;
+		cout << "back = " << v.Back() << endl;
+
+		system("pause");
+		system("cls");
+	}
+
+	static void TestList()
+	{
+
+	}
+
+	static void TestDeque()
+	{
+
+	}
+
+	static void TestStack()
+	{
+
+	}
+
+	static void Queue()
+	{
+
+	}
+
+	static void TestSortedset()
+	{
+
+	}
+
+	static void TestSortedmap()
+	{
+
+	}
+
+	static void TestHashset()
+	{
+
+	}
+
+	static void TestHashmap()
+	{
+
+	}
+
 public:
 	// 测试启动接口
 	static void StartTest()
 	{
+		srand((unsigned int)time(NULL));
+
 		PrintHello();
 		int ipt = 0;
 		do
@@ -67,7 +205,8 @@ public:
 			switch (ipt)
 			{
 			case 1:	// vector
-
+				TestVector();
+				PrintMainInterface();
 				break;
 			case 2:	// list
 
@@ -106,3 +245,9 @@ public:
 		system("pause");
 	}
 };
+
+::ostream& operator<<(::ostream& cout, const Test::TestType& tt)
+{
+	cout << "{" << tt.i << ", " << tt.d << ", " << tt.str << "}";
+	return cout;
+}

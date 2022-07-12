@@ -11,11 +11,11 @@ namespace mstl_itm
 	class Vector
 	{
 	public:
-		using ValueType		= _ValueT;		// 元素类型
-		using Pointer			= _ValueT*;		// 元素类型指针
-		using Reference		= _ValueT&;
+		using ValueType = _ValueT;		// 元素类型
+		using Pointer = _ValueT*;		// 元素类型指针
+		using Reference = _ValueT&;
 		using DifferenceType = size_t;		// 指针距离类型
-		using Iterator			= Pointer;		// Vector迭代器
+		using Iterator = Pointer;		// Vector迭代器
 
 	private:
 		Iterator m_start;				// 目前使用空间的头部
@@ -95,11 +95,23 @@ namespace mstl_itm
 		ValueType Front() { return *m_start; }
 
 		// 获取末元素
-		ValueType Back() { return *m_finish; }
+		ValueType Back() { return *(m_finish - 1); }
 
 		// 索引器
 		Reference operator[](size_t index) { return *(m_start + index); }
 
+	private:
+		// vector扩容机制
+		void _Append()
+		{
+			size_t cap = Capcity();
+			Allocator<ValueType>::Append(m_start, cap, 2 * cap);
+			// 更新3根指针
+			m_finish = m_start + cap;
+			m_endOfStorage = m_start + 2 * cap;
+		}
+
+	public:
 		// 添加元素
 		void PushBack(const ValueType& elem)
 		{
@@ -107,11 +119,7 @@ namespace mstl_itm
 			if (Size() == Capcity())
 			{
 				// 扩容
-				size_t cap = Capcity();
-				Allocator<ValueType>::Append(m_start, cap, 2 * cap);
-				// 更新3根指针
-				m_finish = m_start + cap;
-				m_endOfStorage = m_start + 2 * cap;
+				_Append();
 			}
 			*m_finish = elem;
 			m_finish++;

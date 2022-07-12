@@ -14,7 +14,8 @@ namespace mstl_itm
 
 	// 单向访问迭代器类型
 	template <class _ValueT>
-	class ForwardIterator : public InputIterator<_ValueT>
+	class ForwardIterator : 
+		public InputIterator<_ValueT>
 	{
 	public:
 		using IterType			= ForwardIterator;
@@ -22,7 +23,8 @@ namespace mstl_itm
 
 	// 双向访问迭代器类型
 	template <class _ValueT>
-	class BidirectionalIterator : public ForwardIterator<_ValueT>
+	class BidirectionalIterator : 
+		public ForwardIterator<_ValueT>
 	{
 	public:
 		using IterType			= BidirectionalIterator;
@@ -30,7 +32,8 @@ namespace mstl_itm
 
 	// 随机访问迭代器类型
 	template <class _ValueT>
-	class RandomAcessIterator : public BidirectionalIterator<_ValueT>
+	class RandomAcessIterator : 
+		public BidirectionalIterator<_ValueT>
 	{
 	public:
 		using IterType			= RandomAcessIterator;
@@ -50,8 +53,8 @@ namespace mstl_itm
 	class IteratorTraits<_Iter*>
 	{
 	public:
-		using ValueType		= _Iter;
-		using IterType			= RandomAcessIterator<ValueType>;
-		using DifferenceType = size_t;
+		using ValueType			= _Iter;
+		using IterType				= RandomAcessIterator<ValueType>;
+		using DifferenceType		= size_t;
 	};
 }
