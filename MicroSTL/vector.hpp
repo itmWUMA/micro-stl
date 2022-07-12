@@ -76,6 +76,21 @@ namespace mstl_itm
 			m_finish = nullptr;
 		}
 
+		// 赋值操作
+		Vector& operator=(const Vector& v)
+		{
+			DifferenceType cap = v.m_endOfStorage - v.m_start;
+			Pointer p = Allocator<ValueType>::AllocateRange(cap);
+			m_start = p;
+			m_finish = p;
+			m_endOfStorage = p + cap;
+
+			for (auto iter = v.m_start; iter != v.m_finish; iter++, m_finish++)
+				*m_finish = *iter;
+
+			return *this;
+		}
+
 		// 获取起始迭代器
 		Iterator Begin() { return m_start; }
 
