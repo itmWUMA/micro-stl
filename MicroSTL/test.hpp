@@ -130,21 +130,49 @@ private:
 			v.PushBack(randTT);
 		}
 
+		// 插入元素
+		Sleep(1000);
+		cout << "Insert one element at [1] : " << endl;
+		v.Insert(1, TestType(1, 1.5, "INSERT_ELEMENT"));
+
 		// 打印vector
-		Sleep(100);
+		Sleep(1000);
 		cout << "vector: \n[ " << endl;
 		for (auto iter = v.Begin(); iter != v.End(); iter++)
 			cout << *iter << "," << endl;
 		cout << " ]\n";
 
 		// 显示vector属性
-		Sleep(100);
+		Sleep(1000);
 		cout << endl;
 		cout << "size = " << v.Size() << endl;
 		cout << "capcity = " << v.Capcity() << endl;
 		cout << "isEmpty = " << (v.IsEmpty() ? "TRUE" : "FALSE") << endl;
 		cout << "front = " << v.Front() << endl;
 		cout << "back = " << v.Back() << endl;
+
+		// 删除元素
+		cout << endl;
+		Sleep(1000);
+		cout << "Now let's pop back : " << endl;
+		for (int i = 0; i < 3; i++)
+		{
+			Sleep(500);
+			cout << "pop back elem : " << v.PopBack() << endl;
+		}
+		Sleep(1000);
+		cout << "Now let's erase elem at [1] : " << endl;
+		for (int i = 0; i < 3; i++)
+		{
+			Sleep(100);
+			cout << "earse elem : " << v.Erase(1) << endl;
+		}
+		Sleep(1000);
+		cout << endl;
+		cout << "current vector: \n[ " << endl;
+		for (auto iter = v.Begin(); iter != v.End(); iter++)
+			cout << *iter << "," << endl;
+		cout << " ]\n";
 
 		system("pause");
 		system("cls");
@@ -196,7 +224,7 @@ public:
 	{
 		srand((unsigned int)time(NULL));
 
-		PrintHello();
+		//PrintHello();
 		int ipt = 0;
 		do
 		{

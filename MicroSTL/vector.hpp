@@ -124,5 +124,47 @@ namespace mstl_itm
 			*m_finish = elem;
 			m_finish++;
 		}
+
+		// 插入元素
+		void Insert(int pos, const ValueType& elem)
+		{
+			if (pos < 0 || pos > (int)this->Size()) throw;
+			// 数组满员
+			if (Size() == Capcity())
+			{
+				// 扩容
+				_Append();
+			}
+
+			// 向后搬运
+			Iterator iter = m_finish;
+			for (int i = this->Size(); i > pos; i--, iter--)
+				*iter = *(iter - 1);
+			// 插入元素
+			*(m_start + pos) = elem;
+			// 更新指针
+			m_finish++;
+		}
+
+		// 删除尾部元素
+		ValueType PopBack()
+		{
+			if (IsEmpty())	throw;
+			return *--m_finish;
+		}
+
+		// 删除元素
+		ValueType Erase(int pos)
+		{
+			if (pos < 0 || pos > (int)this->Size() || IsEmpty()) throw;
+			ValueType res = *(m_start + pos);
+			// 向前搬运
+			for (auto iter = m_start + pos; iter != m_finish - 1; iter++)
+				*iter = *(iter + 1);
+			// 更新指针
+			m_finish--;
+			
+			return res;
+		}
 	};
 }
