@@ -2,8 +2,15 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define LIST
 
+#ifndef ALLOCATOR
 #include "allocator.hpp"
+#endif // !ALLOCATOR
+#ifndef ITERATOR
 #include "iterator.hpp"
+#endif // !ITERATOR
+#ifndef ALGORITHM
+#include "algorithm.hpp"
+#endif // !ALGORITHM
 
 namespace mstl_itm
 {
@@ -13,7 +20,7 @@ namespace mstl_itm
 	public:
 		using ValueType = _ValueT;		// 元素类型
 		using Reference = _ValueT&;	// 元素引用类型
-		using Pointer	 = _ValueT*;	// 元素指针类型
+		using Pointer = _ValueT*;	// 元素指针类型
 
 	private:
 		// 链表结点
@@ -24,6 +31,8 @@ namespace mstl_itm
 			NodePtr next;		// 后指针
 			NodePtr prior;		// 前指针
 			ValueType data;	// 元素值
+
+			ListNode() : next(nullptr), prior(nullptr), data(ValueType()) {}
 		};
 
 		// 链表迭代器
@@ -76,5 +85,49 @@ namespace mstl_itm
 	public:
 		using NodePtr = ListNode*;		// 结点指针类型
 		using Iterator = ListIterator;	// 迭代器
+
+	private:
+		NodePtr dummyHead;	// 链表的头结点
+
+	public:
+		// 获取起始迭代器
+		Iterator Begin() { return Iterator(dummyHead->next); }
+
+		// 获取终止迭代器
+		Iterator End() { return Iterator(dummyHead); }
+
+		// 判断是否为空
+		bool IsEmpty() { return dummyHead->next == dummyHead; }
+
+		// 获取链表元素个数
+		size_t Size() { return Algorithm::Distance(Begin(), End()); }
+
+		// 首元素
+		Reference Front() { return *Begin(); }
+
+		// 尾元素
+		Reference Back() { return *(--End()); }
+
+	private:
+		// 申请一个结点
+		NodePtr CreateNode() { return Allocator<ListNode>::Allocate(); }
+		NodePtr CreateNode(const ValueType& elem)
+		{
+			NodePtr p = CreateNode();
+			p->data = elem;
+			return p;
+		}
+
+		// 释放一个结点
+		void DeleteNode(NodePtr p) { Allocator<ListNode>::Deallocate(p); }
+
+	public:
+		// 默认构造
+		List()
+		{
+			dummyHead = CreateNode();
+			dummyHead->next = dummyHead;
+			dummyHead->prior = dummyHead;
+		}
 	};
 }

@@ -2,8 +2,13 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define VECTOER
 
+#ifndef ALLOCATOR
 #include "allocator.hpp"
+#endif // !ALLOCATOR
+#ifndef ITERATOR
 #include "iterator.hpp"
+#endif // !ITERATOR
+
 
 #include <initializer_list>
 

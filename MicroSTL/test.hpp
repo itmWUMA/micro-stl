@@ -1,7 +1,13 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
+
+#ifndef ALLOCATOR
 #include "allocator.hpp"
+#endif // !ALLOCATOR
+#ifndef VECTOR
 #include "vector.hpp"
+#endif // !VECTOR
+
 #include <iostream>
 #include <string>
 #include <random>

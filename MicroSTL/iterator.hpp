@@ -10,6 +10,7 @@ namespace mstl_itm
 	public:
 		using ValueType		= _ValueT;	// 迭代器指向值的类型
 		using IterType			= InputIterator;
+		using Pointer			= _ValueT*;
 	};
 
 	// 单向访问迭代器类型
