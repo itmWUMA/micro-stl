@@ -1,5 +1,6 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
+#define TEST
 
 #ifndef ALLOCATOR
 #include "allocator.hpp"
@@ -7,6 +8,10 @@
 #ifndef VECTOR
 #include "vector.hpp"
 #endif // !VECTOR
+#ifndef LIST
+#include "list.hpp"
+#endif // !LIST
+
 
 #include <iostream>
 #include <string>
@@ -113,6 +118,14 @@ private:
 		{
 			return !(*this == tt);
 		}
+
+		// 生成随机值
+		static TestType GenerateRand()
+		{
+			int ir = rand() % 101;
+			double dr = (double)(rand() % 101);
+			return TestType(ir, dr, GetRandStr(5));
+		}
 	};
 
 	friend ostream& operator<<(ostream&, const Test::TestType&);
@@ -125,20 +138,17 @@ private:
 
 		// 生成随机值并打印
 		cout << "Push 10 random elements : " << endl;
-		default_random_engine e((unsigned int)time(NULL));
-		uniform_int_distribution<int> ir(0, 100);
-		uniform_real_distribution<double> dr(0, 100);
 		for (int i = 0; i < 10; i++)
 		{
 			Sleep(100);
-			TestType randTT = TestType(ir(e), dr(e), GetRandStr(5));
+			TestType randTT = TestType::GenerateRand();
 			cout << randTT << endl;
 			v.PushBack(randTT);
 		}
 
 		// 插入元素
 		Sleep(1000);
-		cout << "Insert one element at [1] : " << endl;
+		cout << "Insert one element at [1]..." << endl;
 		v.Insert(1, TestType(1, 1.5, "INSERT_ELEMENT"));
 
 		// 打印vector
@@ -160,14 +170,14 @@ private:
 		// 删除元素
 		cout << endl;
 		Sleep(1000);
-		cout << "Now let's pop back : " << endl;
+		cout << "Now let's pop back..." << endl;
 		for (int i = 0; i < 3; i++)
 		{
 			Sleep(500);
 			cout << "pop back elem : " << v.PopBack() << endl;
 		}
 		Sleep(1000);
-		cout << "Now let's erase elem at [1] : " << endl;
+		cout << "Now let's erase elem at [1]..." << endl;
 		for (int i = 0; i < 3; i++)
 		{
 			Sleep(100);
@@ -199,7 +209,65 @@ private:
 
 	static void TestList()
 	{
+		system("cls");
 
+		List<TestType> l;
+
+		// 生成随机值并打印
+		cout << "Push 10 random elements : " << endl;
+		for (int i = 0; i < 10; i++)
+		{
+			Sleep(100);
+			TestType randTT = TestType::GenerateRand();
+			cout << randTT << endl;
+			l.PushBack(randTT);
+		}
+
+		// 插入元素
+		Sleep(1000);
+		cout << "Insert one element at [1]..." << endl;
+		l.Insert(++(l.Begin()), TestType(1, 1.5, "INSERT_ELEMENT"));
+		Sleep(500);
+		cout << "Push front one element..." << endl;
+		l.PushFront(TestType(-5, 3.14, "PUSH_FRONT_ELEMENT"));
+
+		// 打印list
+		Sleep(1000);
+		cout << "list: \n[ " << endl;
+		for (auto iter = l.Begin(); iter != l.End(); iter++)
+			cout << *iter << "->" << endl;
+		cout << " ]\n";
+
+		// 显示list属性
+		Sleep(1000);
+		cout << endl;
+		cout << "size = " << l.Size() << endl;
+		cout << "isEmpty = " << (l.IsEmpty() ? "TRUE" : "FALSE") << endl;
+		cout << "front = " << l.Front() << endl;
+		cout << "back = " << l.Back() << endl;
+
+		// 删除元素
+		cout << endl;
+		Sleep(1000);
+		cout << "Now let's erase element at [1]..." << endl;
+		l.Erase(++(l.Begin()));
+		Sleep(500);
+		cout << "Then let's pop front element..." << endl;;
+		TestType res = l.PopFront();
+		cout << "pop front element = " << res << endl;
+		Sleep(500);
+		cout << "And then let's pop back element..." << endl;
+		res = l.PopBack();
+		cout << "pop back element = " << res << endl;
+		Sleep(1000);
+		cout << endl;
+		cout << "current vector: \n[ " << endl;
+		for (auto iter = l.Begin(); iter != l.End(); iter++)
+			cout << *iter << "->" << endl;
+		cout << " ]\n";
+
+		system("pause");
+		system("cls");
 	}
 
 	static void TestDeque()
@@ -256,7 +324,8 @@ public:
 				PrintMainInterface();
 				break;
 			case 2:	// list
-
+				TestList();
+				PrintMainInterface();
 				break;
 			case 3:	// deque
 

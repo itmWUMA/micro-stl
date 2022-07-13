@@ -130,8 +130,8 @@ namespace mstl_itm
 			dummyHead->prior = dummyHead;
 		}
 
-		// 析构
-		~List()
+		// 清空链表
+		void Clear()
 		{
 			NodePtr curNode = dummyHead->next, nextNode;
 			// 依次释放后续结点
@@ -141,8 +141,17 @@ namespace mstl_itm
 				DeleteNode(curNode);
 				curNode = nextNode;
 			}
+			dummyHead->next = dummyHead;
+			dummyHead->prior = dummyHead;
+		}
+
+		// 析构
+		~List()
+		{
+			// 清空
+			Clear();
 			// 释放dummyHead
-			DeleteNode(curNode);
+			DeleteNode(dummyHead);
 			dummyHead = nullptr;
 		}
 
@@ -161,5 +170,37 @@ namespace mstl_itm
 
 		// 尾插结点
 		void PushBack(const ValueType& val) { Insert(End(), val); }
+
+		// 头插结点
+		void PushFront(const ValueType& val) { Insert(Begin(), val); }
+
+		// 擦除结点
+		Iterator Erase(Iterator pos)
+		{
+			NodePtr priorNode = (pos.node)->prior;
+			NodePtr nextNode = (pos.node)->next;
+			priorNode->next = nextNode;
+			nextNode->prior = priorNode;
+			DeleteNode(pos.node);
+			return Iterator(nextNode);
+		}
+
+		// 尾删
+		ValueType PopBack()
+		{
+			Iterator temp = End();
+			ValueType res = (--temp).node->data;
+			Erase(temp);
+			return res;
+		}
+
+		// 头删
+		ValueType PopFront()
+		{
+			Iterator temp = Begin();
+			ValueType res = temp.node->data;
+			Erase(temp);
+			return res;
+		}
 	};
 }
