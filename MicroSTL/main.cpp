@@ -6,13 +6,20 @@
 //#include <vector>
 
  //Inner Test
-int main()
+void Test()
 {
 	List<int> l;
+	l.PushBack(10);
 	l.Size();
 	l.IsEmpty();
 	l.Begin();
 	l.End();
+	l.Front();
+}
+
+int main()
+{
+	Test();
 
 	return 0;
 }

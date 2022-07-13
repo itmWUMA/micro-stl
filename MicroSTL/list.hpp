@@ -129,5 +129,37 @@ namespace mstl_itm
 			dummyHead->next = dummyHead;
 			dummyHead->prior = dummyHead;
 		}
+
+		// 析构
+		~List()
+		{
+			NodePtr curNode = dummyHead->next, nextNode;
+			// 依次释放后续结点
+			while (curNode != dummyHead)
+			{
+				nextNode = curNode->next;
+				DeleteNode(curNode);
+				curNode = nextNode;
+			}
+			// 释放dummyHead
+			DeleteNode(curNode);
+			dummyHead = nullptr;
+		}
+
+		// 插入结点
+		Iterator Insert(Iterator pos, const ValueType& val)
+		{
+			// 创建结点
+			NodePtr newNode = CreateNode(val);
+			// 调整指针
+			newNode->next = pos.node;
+			newNode->prior = (pos.node)->prior;
+			newNode->prior->next = newNode;
+			(pos.node)->prior = newNode;
+			return Iterator(newNode);
+		}
+
+		// 尾插结点
+		void PushBack(const ValueType& val) { Insert(End(), val); }
 	};
 }
