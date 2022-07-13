@@ -202,5 +202,17 @@ namespace mstl_itm
 			Erase(temp);
 			return res;
 		}
+
+		// ÒÆ³ıÖ¸¶¨ÔªËØ
+		void Remove(const ValueType& elem)
+		{
+			for (auto iter = Begin(); iter != End();)
+			{
+				if ((iter.node)->data == elem)
+					iter = Erase(iter);
+				else
+					iter++;
+			}
+		}
 	};
 }

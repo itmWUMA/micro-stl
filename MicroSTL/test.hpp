@@ -230,6 +230,8 @@ private:
 		Sleep(500);
 		cout << "Push front one element..." << endl;
 		l.PushFront(TestType(-5, 3.14, "PUSH_FRONT_ELEMENT"));
+		l.PushFront(TestType(-5, 3.14, "PUSH_FRONT_ELEMENT"));
+		l.PushFront(TestType(-5, 3.14, "PUSH_FRONT_ELEMENT"));
 
 		// ´òÓ¡list
 		Sleep(1000);
@@ -259,7 +261,9 @@ private:
 		cout << "And then let's pop back element..." << endl;
 		res = l.PopBack();
 		cout << "pop back element = " << res << endl;
-		Sleep(1000);
+		Sleep(500);
+		cout << "Remove elements..." << endl;
+		l.Remove(TestType(-5, 3.14, "PUSH_FRONT_ELEMENT"));
 		cout << endl;
 		cout << "current vector: \n[ " << endl;
 		for (auto iter = l.Begin(); iter != l.End(); iter++)
