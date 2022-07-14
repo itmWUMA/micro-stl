@@ -11,6 +11,9 @@
 #ifndef LIST
 #include "list.hpp"
 #endif // !LIST
+#ifndef DEQUE
+#include "deque.hpp"
+#endif // !DEQUE
 
 
 #include <iostream>
@@ -276,7 +279,43 @@ private:
 
 	static void TestDeque()
 	{
+		system("cls");
 
+		Deque<TestType> dq;
+
+		// 生成随机值并打印
+		cout << "Push 10 random elements : " << endl;
+		for (int i = 0; i < 10; i++)
+		{
+			Sleep(100);
+			TestType randTT = TestType::GenerateRand();
+			cout << randTT << endl;
+			dq.PushBack(randTT);
+		}
+
+		// 插入元素
+		Sleep(1000);
+		cout << "Insert one element at front..." << endl;
+		dq.PushFront(TestType(23, 33.3, "PUSH_FRONT"));
+
+		// 打印deque
+		Sleep(1000);
+		cout << "deque: \n[ " << endl;
+		for (auto iter = dq.Begin(); iter != dq.End(); iter++)
+			cout << *iter << "," << endl;
+		cout << " ]\n";
+
+		// 显示deque属性
+		Sleep(1000);
+		cout << endl;
+		cout << "size = " << dq.Size() << endl;
+		cout << "isEmpty = " << (dq.IsEmpty() ? "TRUE" : "FALSE") << endl;
+		cout << "front = " << dq.Front() << endl;
+		cout << "back = " << dq.Back() << endl;
+		cout << "dq[5] = " << dq[5] << endl;
+
+		system("pause");
+		system("cls");
 	}
 
 	static void TestStack()
@@ -332,7 +371,8 @@ public:
 				PrintMainInterface();
 				break;
 			case 3:	// deque
-
+				TestDeque();
+				PrintMainInterface();
 				break;
 			case 4:	// stack
 

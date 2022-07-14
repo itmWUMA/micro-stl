@@ -103,17 +103,17 @@ namespace mstl_itm
 				return temp;
 			}
 
-			Iterator& operator+=(size_t n)
+			Iterator& operator+=(int n)
 			{
-				size_t offset = n + (m_cur - m_first);
+				int offset = n + (m_cur - m_first);
 				// 目标在同一缓存区
-				if (offset >= 0 && offset < GetBufferSize())
+				if (offset >= 0 && offset < (int)GetBufferSize())
 					m_cur += n;
 				// 目标不在同一缓存区
 				else
 				{
 					size_t nodeOffset = offset > 0 ? offset / GetBufferSize() :
-						-((-offset - 1) / GetBufferSize()) - 1;
+						-((-offset - 1) / (int)GetBufferSize()) - 1;
 					// 跳到正确的缓存区
 					operator>>(m_node + nodeOffset);
 					// 切换至正确的元素
@@ -123,18 +123,18 @@ namespace mstl_itm
 				return *this;
 			}
 
-			Iterator operator+(size_t n) const
+			Iterator operator+(int n) const
 			{
 				Iterator temp = *this;
 				return temp += n;
 			}
 
-			Iterator& operator-=(size_t n)
+			Iterator& operator-=(int n)
 			{
 				return *this += -n;
 			}
 
-			Iterator operator-(size_t n) const
+			Iterator operator-(int n) const
 			{
 				Iterator temp = *this;
 				return temp -= n;
@@ -204,6 +204,12 @@ namespace mstl_itm
 			finish.m_cur = finish.m_first + elemCount % GetBufferSize();
 		}
 
+		// 尾部扩容中控器
+		void AppendMapBack()
+		{
+
+		}
+
 	public:
 		// 默认构造
 		Deque() { CreateMapAndNodes(0); }
@@ -217,6 +223,60 @@ namespace mstl_itm
 			// 填充
 			for (Iterator iter = start; iter != finish; iter++)
 				*(iter.m_cur) = val;
+		}
+
+		// 尾插
+		void PushBack(const ValueType& val)
+		{
+			// 最后缓冲区有两个及以上的备用缓冲区空间
+			if (finish.m_cur != finish.m_last - 1)
+			{
+				*(finish.m_cur) = val;
+				++(finish.m_cur);
+			}
+			// 仅剩余一个备用缓冲区空间
+			else
+			{
+				// 中控器空间不足
+				if (finish.m_node - map == mapSize - 1)
+				{
+					//TODO: 扩容map
+					AppendMapBack();
+				}
+
+				// 构建新的缓冲区
+				*(finish.m_node + 1) = Allocator<ValueType>::AllocateRange(GetBufferSize());
+				*(finish.m_cur) = val;
+				// 更新迭代器
+				finish >> (finish.m_node + 1);
+				finish.m_cur = finish.m_first;
+			}
+		}
+
+		// 头插
+		void PushFront(const ValueType& val)
+		{
+			// 第一缓冲区有备用缓冲区空间
+			if (start.m_cur != start.m_first)
+			{
+				*(start.m_cur - 1) = val;
+				start.m_cur--;
+			}
+			// 第一缓冲区无备用缓冲区空间
+			else
+			{
+				// 中控器空间不足
+				if (start.m_node == map)
+				{
+					//TODO: 扩容
+					
+				}
+
+				*(start.m_node - 1) = Allocator<ValueType>::AllocateRange(GetBufferSize());
+				start >> (start.m_node - 1);
+				start.m_cur = start.m_last - 1;
+				*(start.m_cur) = val;
+			}
 		}
 	};
 }
