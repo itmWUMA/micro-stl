@@ -4,7 +4,15 @@
 #ifndef TEST
 #include "test.hpp"
 #endif // !TEST
+#ifndef DEQUE
+#include "deque.hpp"
+#endif // !DEQUE
+
  //Inner Test
+void Test()
+{
+
+}
 
 int main()
 {
