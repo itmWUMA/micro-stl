@@ -5,6 +5,10 @@
 #ifndef ITERATOR
 #include "iterator.hpp"
 #endif // !ITERATOR
+#ifndef ALLOCATOR
+#include "allocator.hpp"
+#endif // !ALLOCATOR
+
 
 
 namespace mstl_itm
@@ -14,7 +18,7 @@ namespace mstl_itm
 	{
 	public:
 		using ValueType = _ValueT;		// 元素类型
-		using Pointer	 = _ValueT*;	// 元素类型指针
+		using Pointer = _ValueT*;	// 元素类型指针
 		using Reference = _ValueT&;	// 元素类型引用
 
 	private:
@@ -26,7 +30,7 @@ namespace mstl_itm
 
 	private:
 		// 计算缓冲区元素个数
-		size_t GetBufferSize()
+		static size_t GetBufferSize()
 		{
 			return _BufSize != 0 ? _BufSize :
 				(sizeof(ValueType) < 512 ? (512 / sizeof(ValueType)) : 1);
@@ -147,5 +151,72 @@ namespace mstl_itm
 
 	public:
 		using Iterator = DequeIterator;
+
+	private:
+		Iterator start;	// 指向第一个缓冲区的头结点
+		Iterator finish;	// 指向最后一个缓冲区的尾结点
+
+	public:
+		// 起始迭代器
+		Iterator Begin() { return start; }
+
+		// 终止迭代器
+		Iterator End() { return finish; }
+
+		// 索引器
+		Reference operator[](size_t i) { return start[i]; }
+
+		// 首元素
+		Reference Front() { return *start; }
+
+		// 尾元素
+		Reference Back() { return *(finish - 1); }
+
+		// 元素个数
+		size_t Size() { return finish - start; }
+
+		// 判断是否为空
+		bool IsEmpty() { return start == finish; }
+
+	private:
+		// 建立结点和中控器
+		void CreateMapAndNodes(size_t elemCount)
+		{
+			// 所需缓存区个数
+			size_t nodeCount = elemCount / GetBufferSize() + 1;
+			// 中控器大小
+			mapSize = nodeCount > 8 ? nodeCount + 2 : 8;	// 中控器最小要存放8个缓存区
+			// 申请中控器的空间
+			map = Allocator<Pointer>::AllocateRange(mapSize);
+
+			// 将中控器区域移至map的中间
+			MapPointer nstart = map + (mapSize - nodeCount) / 2;
+			MapPointer nfinish = nstart + nodeCount - 1;
+			MapPointer cur;
+			// 申请缓存区的空间
+			for (cur = nstart; cur <= nfinish; cur++)
+				*cur = Allocator<ValueType>::AllocateRange(GetBufferSize());
+
+			// 更新当前成员
+			start >> nstart;
+			finish >> nfinish;
+			start.m_cur = start.m_first;
+			finish.m_cur = finish.m_first + elemCount % GetBufferSize();
+		}
+
+	public:
+		// 默认构造
+		Deque() { CreateMapAndNodes(0); }
+
+		// 填充构造
+		Deque(int elemCount, const ValueType& val) 
+		{ 
+			// 生成结构
+			CreateMapAndNodes(elemCount); 
+			
+			// 填充
+			for (Iterator iter = start; iter != finish; iter++)
+				*(iter.m_cur) = val;
+		}
 	};
 }

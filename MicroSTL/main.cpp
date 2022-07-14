@@ -9,14 +9,10 @@
 #endif // !DEQUE
 
  //Inner Test
-void Test()
-{
 
-}
-
-int main()
-{
-	Test::StartTest();
-
-	return 0;
-}
+//int main()
+//{
+//	Test::StartTest();
+//
+//	return 0;
+//}
