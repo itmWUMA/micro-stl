@@ -338,5 +338,26 @@ namespace mstl_itm
 				return res;
 			}
 		}
+
+		// 头删元素
+		ValueType PopFront()
+		{
+			// 第一缓冲区有两个以上元素
+			if (start.m_cur != start.m_last - 1)
+			{
+				ValueType res = *start;
+				++start.m_cur;
+				return res;
+			}
+			// 第一缓冲区仅含一个元素
+			else
+			{
+				ValueType res = *start;
+				Allocator<ValueType>::DeallocateRange(start.m_first);
+				start >> (start.m_node + 1);
+				start.m_cur = start.m_first;
+				return res;
+			}
+		}
 	};
 }

@@ -314,6 +314,17 @@ private:
 		cout << "back = " << dq.Back() << endl;
 		cout << "dq[5] = " << dq[5] << endl;
 
+		// É¾³ýÔªËØ
+		cout << endl;
+		Sleep(1000);
+		cout << "Now let's pop back elements..." << endl;
+		TestType res = dq.PopBack();
+		cout << "pop back element = " << res << endl;
+		Sleep(500);
+		cout << "Now let's pop front elements..." << endl;
+		res = dq.PopFront();
+		cout << "pop front element = " << res << endl;
+
 		system("pause");
 		system("cls");
 	}
