@@ -26,5 +26,15 @@ namespace mstl_itm
 			}
 			return count;
 		}
+
+		// 比较大小
+		template <typename T>
+		static T Max(const T& t1, const T& t2) { return t1 < t2 ? t2 : t1; }
+		template <typename T, typename... _Types>
+		static T Max(const T& t, const _Types&... types)
+		{
+			T typesMax = Max(types);
+			return t < typesMax ? typesMax : t;
+		}
 	};
 }

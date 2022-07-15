@@ -8,7 +8,9 @@
 #ifndef ALLOCATOR
 #include "allocator.hpp"
 #endif // !ALLOCATOR
-
+#ifndef ALGORITHM
+#include "algorithm.hpp"
+#endif // !ALGORITHM
 
 
 namespace mstl_itm
@@ -190,7 +192,7 @@ namespace mstl_itm
 			map = Allocator<Pointer>::AllocateRange(mapSize);
 
 			// 将中控器区域移至map的中间
-			MapPointer nstart = map + (mapSize - nodeCount) / 2;
+			MapPointer nstart = map + ((mapSize - nodeCount) >> 1);
 			MapPointer nfinish = nstart + nodeCount - 1;
 			MapPointer cur;
 			// 申请缓存区的空间
@@ -205,9 +207,33 @@ namespace mstl_itm
 		}
 
 		// 尾部扩容中控器
-		void AppendMapBack()
+		void AppendMap(size_t addNodeCount = 1, bool isAddFront = true)
 		{
+			// 新中控器大小计算
+			size_t newMapSize = mapSize + Algorithm::Max(mapSize, addNodeCount) + 2;
+			size_t oldNumNodes = finish.m_node - start.m_node + 1;
+			size_t newNumNodes = oldNumNodes + addNodeCount;
 
+			// 申请新中控器的空间
+			MapPointer newMap = Allocator<Pointer>::AllocateRange(newMapSize);
+			MapPointer newNstrart = newMap + ((newMapSize - newNumNodes) >> 1) +
+				(isAddFront ? addNodeCount : 0);
+			
+			// 拷贝原map内容
+			for (MapPointer i = start.m_node, j = finish.m_node, k = newNstrart;
+				i < j + 1; i++, k++) 
+			{
+				*k = *i;
+			}
+
+			// 释放原map
+			Allocator<Pointer>::DeallocateRange(map);
+
+			// 更新成员数据
+			map = newMap;
+			mapSize = newMapSize;
+			start >> newNstrart;
+			finish >> (newNstrart + oldNumNodes - 1);
 		}
 
 	public:
@@ -225,6 +251,18 @@ namespace mstl_itm
 				*(iter.m_cur) = val;
 		}
 
+		// 析构
+		~Deque()
+		{
+			// 释放缓存区
+			for (MapPointer p = start.m_node; p < finish.m_node + 1; p++)
+				Allocator<ValueType>::DeallocateRange(*p);
+
+			// 释放中控器
+			Allocator<Pointer>::DeallocateRange(map);
+			map = nullptr;
+		}
+
 		// 尾插
 		void PushBack(const ValueType& val)
 		{
@@ -240,8 +278,8 @@ namespace mstl_itm
 				// 中控器空间不足
 				if (finish.m_node - map == mapSize - 1)
 				{
-					//TODO: 扩容map
-					AppendMapBack();
+					// 扩容map
+					AppendMap(1, false);
 				}
 
 				// 构建新的缓冲区
@@ -268,14 +306,36 @@ namespace mstl_itm
 				// 中控器空间不足
 				if (start.m_node == map)
 				{
-					//TODO: 扩容
-					
+					// 扩容map
+					AppendMap();
 				}
 
 				*(start.m_node - 1) = Allocator<ValueType>::AllocateRange(GetBufferSize());
 				start >> (start.m_node - 1);
 				start.m_cur = start.m_last - 1;
 				*(start.m_cur) = val;
+			}
+		}
+
+		// 尾删元素
+		ValueType PopBack()
+		{
+			// 缓冲区有1个以上的元素
+			if (finish.m_cur != finish.m_first)
+			{
+				--finish.m_cur;
+				ValueType res = *finish;
+				return res;
+			}
+			// 最后缓冲区无任何元素
+			else
+			{
+				// 释放缓冲区
+				Allocator<ValueType>::DeallocateRange(finish.m_cur);
+				finish >> (finish.m_node - 1);
+				finish.m_cur = finish.m_last - 1;
+				ValueType res = *finish;
+				return res;
 			}
 		}
 	};
