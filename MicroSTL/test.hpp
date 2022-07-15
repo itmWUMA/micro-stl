@@ -359,13 +359,21 @@ private:
 
 	}
 
+	static void PrintComingSoon()
+	{
+		cout << "currently unavailable, coming soon..." << endl;
+
+		system("pause");
+		system("cls");
+	}
+
 public:
 	// ²âÊÔÆô¶¯½Ó¿Ú
 	static void StartTest()
 	{
 		srand((unsigned int)time(NULL));
 
-		//PrintHello();
+		PrintHello();
 		int ipt = 0;
 		do
 		{
@@ -386,22 +394,28 @@ public:
 				PrintMainInterface();
 				break;
 			case 4:	// stack
-
+				PrintComingSoon();
+				PrintMainInterface();
 				break;
 			case 5:	// queue
-
+				PrintComingSoon();
+				PrintMainInterface();
 				break;
 			case 6:	// sortedset
-
+				PrintComingSoon();
+				PrintMainInterface();
 				break;
 			case 7:	// sortedmap
-
+				PrintComingSoon();
+				PrintMainInterface();
 				break;
 			case 8:	// hashset
-
+				PrintComingSoon();
+				PrintMainInterface();
 				break;
 			case 9:	// hashmap
-
+				PrintComingSoon();
+				PrintMainInterface();
 				break;
 			case 0:	// exit
 				system("cls");
