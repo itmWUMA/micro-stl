@@ -14,6 +14,13 @@
 #ifndef DEQUE
 #include "deque.hpp"
 #endif // !DEQUE
+#ifndef STACK
+#include "stack.hpp"
+#endif // !STACK
+#ifndef QUEUE
+#include "queue.hpp"
+#endif // !QUEUE
+
 
 
 #include <iostream>
@@ -331,12 +338,81 @@ private:
 
 	static void TestStack()
 	{
+		system("cls");
 
+		Stack<TestType> s;
+
+		// 生成随机值并打印
+		cout << "Push 10 random elements : " << endl;
+		for (int i = 0; i < 10; i++)
+		{
+			Sleep(100);
+			TestType randTT = TestType::GenerateRand();
+			cout << randTT << endl;
+			s.Push(randTT);
+		}
+
+		// 打印属性
+		Sleep(1000);
+		cout << endl;
+		cout << "size = " << s.Size() << endl;
+		cout << "isEmpty = " << (s.IsEmpty() ? "TRUE" : "FALSE") << endl;
+		cout << "top = " << s.Top() << endl;
+
+		// 弹出所有值
+		Sleep(1000);
+		cout << endl;
+		cout << "Let's pop all elements: " << endl;
+		while (!s.IsEmpty())
+		{
+			Sleep(100);
+			TestType cur = s.Pop();
+			cout << cur << endl;
+		}
+		cout << "Now stack is empty" << endl;
+
+		system("pause");
+		system("cls");
 	}
 
-	static void Queue()
+	static void TestQueue()
 	{
+		system("cls");
 
+		Queue<TestType> q;
+
+		// 生成随机值并打印
+		cout << "Push 10 random elements : " << endl;
+		for (int i = 0; i < 10; i++)
+		{
+			Sleep(100);
+			TestType randTT = TestType::GenerateRand();
+			cout << randTT << endl;
+			q.Enqueue(randTT);
+		}
+
+		// 打印属性
+		Sleep(1000);
+		cout << endl;
+		cout << "size = " << q.Size() << endl;
+		cout << "isEmpty = " << (q.IsEmpty() ? "TRUE" : "FALSE") << endl;
+		cout << "top = " << q.Top() << endl;
+		cout << "back = " << q.Back() << endl;
+
+		// 出队所有值
+		Sleep(1000);
+		cout << endl;
+		cout << "Let's dequeue all elements: " << endl;
+		while (!q.IsEmpty())
+		{
+			Sleep(100);
+			TestType cur = q.Dequeue();
+			cout << cur << endl;
+		}
+		cout << "Now queue is empty" << endl;
+
+		system("pause");
+		system("cls");
 	}
 
 	static void TestSortedset()
@@ -373,7 +449,7 @@ public:
 	{
 		srand((unsigned int)time(NULL));
 
-		PrintHello();
+		//PrintHello();
 		int ipt = 0;
 		do
 		{
@@ -394,11 +470,11 @@ public:
 				PrintMainInterface();
 				break;
 			case 4:	// stack
-				PrintComingSoon();
+				TestStack();
 				PrintMainInterface();
 				break;
 			case 5:	// queue
-				PrintComingSoon();
+				TestQueue();
 				PrintMainInterface();
 				break;
 			case 6:	// sortedset
