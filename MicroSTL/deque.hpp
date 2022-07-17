@@ -251,6 +251,10 @@ namespace mstl_itm
 				*(iter.m_cur) = val;
 		}
 
+		// TODO: 拷贝构造
+
+		// TODO: 赋值拷贝
+
 		// 析构
 		~Deque()
 		{

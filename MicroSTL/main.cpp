@@ -7,9 +7,9 @@
 
  //Inner Test
 
-int main()
-{
-	Test::StartTest();
-
-	return 0;
-}
+//int main()
+//{
+//	Test::StartTest();
+//
+//	return 0;
+//}

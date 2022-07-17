@@ -130,6 +130,10 @@ namespace mstl_itm
 			dummyHead->prior = dummyHead;
 		}
 
+		// TODO: 拷贝构造
+
+		// TODO: 赋值拷贝
+
 		// 清空链表
 		void Clear()
 		{

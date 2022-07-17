@@ -36,5 +36,14 @@ namespace mstl_itm
 			T typesMax = Max(types);
 			return t < typesMax ? typesMax : t;
 		}
+
+		// ÔªËØ½»»»
+		template <typename T>
+		static void Swap(T& t1, T& t2)
+		{
+			T temp = t1;
+			t1 = t2;
+			t2 = temp;
+		}
 	};
 }

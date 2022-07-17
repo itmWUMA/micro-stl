@@ -62,6 +62,9 @@
     <ClInclude Include="functor.hpp">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="heap.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
