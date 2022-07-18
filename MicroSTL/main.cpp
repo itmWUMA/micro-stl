@@ -4,12 +4,16 @@
 #ifndef TEST
 #include "test.hpp"
 #endif // !TEST
+#ifndef FUNCTOR
+#include "functor.hpp"
+#endif // !FUNCTOR
+
 
  //Inner Test
 
-//int main()
-//{
-//	Test::StartTest();
-//
-//	return 0;
-//}
+int main()
+{
+	Test::StartTest();
+
+	return 0;
+}
